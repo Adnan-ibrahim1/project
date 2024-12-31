@@ -26,5 +26,4 @@ def train_logistic_regression():
     y_pred = model.predict(X_test)
     
     # Print classification report
-    print("Logistic Regression Classification Report:")
-    print(classification_report(y_test, y_pred))
+    return y_test,y_pred

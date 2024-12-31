@@ -30,7 +30,4 @@ def train_boosting():
     y_pred_gb = gradient_boost.predict(X_test)
     
     # Print classification report
-    print("AdaBoost Classification Report:")
-    print(classification_report(y_test, y_pred_ada))
-    print("GradientBoosting Classification Report:")
-    print(classification_report(y_test, y_pred_gb))
+    return y_test, y_pred_ada,y_pred_gb 
