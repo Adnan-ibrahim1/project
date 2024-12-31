@@ -1,17 +1,18 @@
-import psycopg2
+import sqlite3
 import pandas as pd
 
-def connect_to_db():
-    return psycopg2.connect(
-        dbname="adtb",
-        user="adnan",
-        password="04152005",
-        host="localhost",
-        port="5432"
-    )
+DB_PATH = "data/project.db"
 
-def fetch_data(query):
+def connect_to_db():
+    """Establish a connection to the SQLite database."""
+    conn = sqlite3.connect(DB_PATH)
+    return conn
+
+def fetch_data(query: str) -> pd.DataFrame:
+    """Fetch data from the database and return as a pandas DataFrame."""
     conn = connect_to_db()
-    df = pd.read_sql_query(query, conn)
-    conn.close()
-    return df
+    try:
+        df = pd.read_sql_query(query, conn)
+        return df
+    finally:
+        conn.close()
