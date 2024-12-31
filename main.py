@@ -1,26 +1,24 @@
-from scripts.database import fetch_data
-from scripts.preprocess import handle_missing_values, encode_target
 from scripts.models.logistic_regression import train_logistic_regression
-from scripts.evaluation import evaluate_model
-from scripts.utils import split_data
+from scripts.models.random_forest import train_random_forest
+from scripts.models.boosting import train_boosting
+from scripts.models.svm_rbf import train_svm_rbf
+from scripts.models.bayesian_model import train_bayesian_model
 
 def main():
-    # Fetch data
-    query = "SELECT * FROM dataset"
-    df = fetch_data(query)
+    print("Training Logistic Regression...")
+    train_logistic_regression()
 
-    # Preprocess
-    df = handle_missing_values(df)
-    df = encode_target(df, "target")
-    X = df.drop(columns=["target"])
-    y = df["target"]
+    print("Training Random Forest...")
+    train_random_forest()
 
-    # Split data
-    X_train, X_test, y_train, y_test = split_data(X, y)
+    print("Training Boosting models...")
+    train_boosting()
 
-    # Train model
-    model, auc = train_logistic_regression(X_train, y_train, X_test, y_test)
-    print(f"Logistic Regression AUC: {auc}")
+    print("Training SVM with RBF Kernel...")
+    train_svm_rbf()
+
+    print("Training Naive Bayes...")
+    train_bayesian_model()
 
 if __name__ == "__main__":
     main()

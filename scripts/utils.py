@@ -1,4 +1,11 @@
-from sklearn.model_selection import train_test_split
+import matplotlib.pyplot as plt
 
-def split_data(X, y, test_size=0.2, random_state=42):
-    return train_test_split(X, y, test_size=test_size, random_state=random_state)
+def plot_feature_importance(model, feature_names):
+    """
+    Plot feature importance for a given model.
+    """
+    importance = model.feature_importances_
+    plt.barh(feature_names, importance)
+    plt.xlabel('Feature Importance')
+    plt.title('Feature Importance Plot')
+    plt.show()
