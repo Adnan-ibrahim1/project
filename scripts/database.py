@@ -1,18 +1,23 @@
 import sqlite3
 import pandas as pd
 
-DB_PATH = "data/project.db"
+DB_PATH = 'data/project.db'
 
-def connect_to_db():
-    """Establish a connection to the SQLite database."""
+def get_data(query):
+    """
+    Fetch data from the database.
+    """
     conn = sqlite3.connect(DB_PATH)
-    return conn
+    df = pd.read_sql_query(query, conn)
+    conn.close()
+    return df
 
-def fetch_data(query: str) -> pd.DataFrame:
-    """Fetch data from the database and return as a pandas DataFrame."""
-    conn = connect_to_db()
-    try:
-        df = pd.read_sql_query(query, conn)
-        return df
-    finally:
-        conn.close()
+def execute_query(query):
+    """
+    Execute a query that doesn't return data (e.g., insert).
+    """
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute(query)
+    conn.commit()
+    conn.close()
