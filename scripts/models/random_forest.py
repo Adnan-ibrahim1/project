@@ -25,5 +25,4 @@ def train_random_forest():
     y_pred = model.predict(X_test)
     
     # Print classification report
-    print("Random Forest Classification Report:")
-    print(classification_report(y_test, y_pred))
+    return y_test,y_pred
